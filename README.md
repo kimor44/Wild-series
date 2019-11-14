@@ -1,6 +1,6 @@
 # Wild-series
 
-To install this website project :
+To install this website project on your computer :
 
 -Clone the project to download its content
 
