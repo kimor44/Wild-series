@@ -1,6 +1,6 @@
 # Wild-series
 
-To install this website project :
+To install this website project on your computer :
 
 -Clone the project to download its content
 
@@ -10,7 +10,7 @@ git clone https://github.com/kimor44/Wild-series.git
 
 -Make Composer install the project's dependecies into vendor/
 
-cd my-project/
+cd Wild-series/
 
 composer install
 
