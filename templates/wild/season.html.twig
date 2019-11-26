@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="container">
-
-        <h2>{{ program.title }}</h2>
+        <h2>{{ program.title }} ({{ episodes.owner.year }})</h2>
         <p>{{ program.summary }}</p>
         <p><img src="{{ program.poster }}" alt=""></p>
         {% for episode in episodes %}
