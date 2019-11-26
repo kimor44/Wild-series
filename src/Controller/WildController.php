@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Program;
 use App\Entity\Category;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,6 +80,34 @@ class WildController extends AbstractController
         return $this->render('wild/category.html.twig', [
             'category' => $category,
             'programs' => $programs
+        ]);
+    }
+
+    /**
+     * Getting programs with a formatted slug for category
+     * @Route("/program/{programName}", requirements={"programName"="^[0-9a-z-]+$"}, defaults={"programName": null}, name="show_program")
+     * @param string $programName The program
+     * @return Response A program
+     */
+    public function showByProgram(string $programName): Response
+    {
+        if (!$programName) {
+            throw $this->createNotFoundException('No program has been sent to find seasons in season\'s table');
+        }
+        $programName = preg_replace(
+            '/-/',
+            ' ', trim(strip_tags($programName))
+        );
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => mb_strtolower($programName)]);
+        if (!$program){
+            throw $this->createNotFoundException('No program with ' . $programName . ' program, found in program\'s table.');
+        }
+        $seasons =  $this->getDoctrine()->getRepository(Season::class)->findBy(
+            ['program' => $program->getId()]
+        );
+        return $this->render('wild/program.html.twig',[
+            'seasons' => $seasons,
+            'program' => $program,
         ]);
     }
 }
