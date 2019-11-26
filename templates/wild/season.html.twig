@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+
+        <h2>{{ program.title }}</h2>
+        <p>{{ program.summary }}</p>
+        <p><img src="{{ program.poster }}" alt=""></p>
+        {% for episode in episodes %}
+            <div class="card">
+                <div class="card-body">
+                    <h4>{{ episode.title }}</h4>
+                    <p>{{ episode.synopsis }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <p><a href="{{ path('wild_show_program', {programName: program.title|lower|replace({' ': '-'})}) }}">Retour au saisons</a></p>
+    </div>
+{% endblock %}

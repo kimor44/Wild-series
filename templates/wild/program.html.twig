@@ -16,6 +16,7 @@
                         <div class="card-body">
                             <h4>Saison {{ loop.index }} ({{ season.year }})</h4>
                             <p>{{ season.description }}</p>
+                            <a href="{{ path('wild_show_season', {id: season.id}) }}" class="btn btn-primary stretched-link">Voir les épisodes</a>
                         </div>
                     </div>
                 {% endfor %}
