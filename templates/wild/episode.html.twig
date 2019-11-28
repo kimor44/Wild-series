@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2>
+            <a href="{{ path('wild_show_program', {programName: program.title|lower|replace({' ': '-'})}) }}">{{ program.title }}</a>
+            <small class="text-muted"><a href="{{ path('wild_show_season', {'id' : season.id}) }}"
+                                         class="">Saison {{ season.year }}</a></small></h2>
+        <p>{{ program.summary }}</p>
+        <hr>
+        <h2>{{ episode.title }} <small class="text-muted">Episode {{ episode.number }}</small></h2>
+        <p>{{ episode.synopsis }}</p>
+    </div>
+{% endblock %}

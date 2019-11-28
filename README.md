@@ -22,4 +22,8 @@ go to http://localhost:8000/ to access at the home page
 
 ###Link to movie 
 
+####Quest "les relations bidirectionnelles"
 https://www.loom.com/share/693570c2c8104c3ca376a8b122f13bda
+
+####Quest "Param Converter"
+https://www.loom.com/share/571eb2724b2548dfb3a8bfa67a86216a
