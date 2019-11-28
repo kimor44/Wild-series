@@ -3,4 +3,8 @@ $theme-colors: (
         "secondary": #2962ff
 );
 
+$headings-font-family:        'Work Sans', sans-serif !default;
+$font-family-sans-serif:      'Taviraj', serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+
 @import "~bootstrap/scss/bootstrap";
