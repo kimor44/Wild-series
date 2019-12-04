@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Categories | Wild Series{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Ajouter une catégorie</h2>
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        <button type="submit" name="btnAdd" class="btn btn-primary">Ajouter</button>
+        {{ form_end(form) }}
+        <hr>
+        <p>
+        <ul>
+            {% for category in categories %}
+                <li>{{ category.name }}</li>
+            {% endfor %}
+        </ul>
+        </p>
+    </div>
+{% endblock %}
