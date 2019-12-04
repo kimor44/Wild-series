@@ -5,6 +5,9 @@
 {% block body %}
     <h1>Season index</h1>
 
+    <a href="{{ path('season_new') }}" class="btn btn-secondary">Create new</a>
+
+
     <table class="table">
         <thead>
             <tr>
@@ -33,5 +36,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('season_new') }}">Create new</a>
 {% endblock %}
