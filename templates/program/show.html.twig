@@ -25,13 +25,7 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('program_index') }}">back to list</a>
-
-    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
-
     {{ include('program/_delete_form.html.twig') }}
-
     <strong>Acteur :</strong>
     <ul class="list-group">
         {% for actor in program.actors %}
@@ -40,6 +34,8 @@
             <li class="list-group-item">Aucun acteur pour cette série</li>
         {% endfor %}
     </ul>
-
+    <a href="{{ path('program_index') }}">back to list</a>
+    <br>
+    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
 
 {% endblock %}
