@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}Actor{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -11,7 +12,10 @@
                 </div>
                 <div class="col-lg-6">
                     <h3>{{ program.title }}</h3>
-                    <p>{{ program.summary }}</p>
+                    <p>{{ program.summary }}<br>
+                        <a href="{{ path('program_show', {id: program.id}) }}" class="btn btn-primary stretched-link">Voir la série</a>
+                    </p>
+
                 </div>
             </div>
         {% endfor %}
