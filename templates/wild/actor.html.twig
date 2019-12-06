@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="actor-name">{{ actor.name }}</h2>
+        <h4>Séries associées</h4>
+        {% for program in programs %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="{{ program.poster }}" alt="img" class="img-fluid">
+                </div>
+                <div class="col-lg-6">
+                    <h3>{{ program.title }}</h3>
+                    <p>{{ program.summary }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
