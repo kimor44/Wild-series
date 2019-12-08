@@ -3,10 +3,11 @@
 {% block title %}Program{% endblock %}
 
 {% block body %}
-    <h1>Program</h1>
+    <div class="container">
+        <h1>Program</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ program.id }}</td>
@@ -23,19 +24,21 @@
                 <th>Poster</th>
                 <td>{{ program.poster }}</td>
             </tr>
-        </tbody>
-    </table>
-    {{ include('program/_delete_form.html.twig') }}
-    <strong>Acteur :</strong>
-    <ul class="list-group">
-        {% for actor in program.actors %}
-            <li class="list-group-item">{{ actor.name }} <a href="{{ path('wild_show_actor', {id: actor.id}) }}" class="btn btn-primary stretched-link">fiche acteur</a></li>
-        {% else %}
-            <li class="list-group-item">Aucun acteur pour cette série</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path('program_index') }}">back to list</a>
-    <br>
-    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
-
+            </tbody>
+        </table>
+        {{ include('program/_delete_form.html.twig') }}
+        <strong>Acteur :</strong>
+        <ul class="list-group">
+            {% for actor in program.actors %}
+                <li class="list-group-item">{{ actor.name }} <a href="{{ path('wild_show_actor', {id: actor.id}) }}"
+                                                                class="btn btn-primary stretched-link">fiche acteur</a>
+                </li>
+            {% else %}
+                <li class="list-group-item">Aucun acteur pour cette série</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('program_index') }}">back to list</a>
+        <br>
+        <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+    </div>
 {% endblock %}
