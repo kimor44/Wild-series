@@ -36,3 +36,6 @@ https://www.loom.com/share/8c62e0960c5749699cb434470d3f09cc
 
 ####Quest "Doctrine relations 'Many-To-Many' "
 https://www.loom.com/share/e535418e8dc941baaa47702ebcc6ee5f
+
+####Quest "EntityType"
+https://www.loom.com/share/d150c3d32d634125b157c3089b50bcc3
