@@ -3,37 +3,39 @@
 {% block title %}Season index{% endblock %}
 
 {% block body %}
-    <h1>Season index</h1>
+    <div class="container">
+        <h1>Season index</h1>
 
-    <a href="{{ path('season_new') }}" class="btn btn-secondary">Create new</a>
+        <a href="{{ path('season_new') }}" class="btn btn-secondary">Create new</a>
 
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Year</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for season in seasons %}
-            <tr>
-                <td>{{ season.id }}</td>
-                <td>{{ season.year }}</td>
-                <td>{{ season.description }}</td>
-                <td>
-                    <a href="{{ path('season_show', {'id': season.id}) }}">show</a>
-                    <a href="{{ path('season_edit', {'id': season.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+        <div class="table-responsive-lxl">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Year</th>
+                    <th>Description</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for season in seasons %}
+                    <tr>
+                        <td>{{ season.id }}</td>
+                        <td>{{ season.year }}</td>
+                        <td>{{ season.description }}</td>
+                        <td>
+                            <a href="{{ path('season_show', {'id': season.id}) }}" class="btn btn-primary">show</a>
+                            <a href="{{ path('season_edit', {'id': season.id}) }}" class="btn btn-secondary">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
