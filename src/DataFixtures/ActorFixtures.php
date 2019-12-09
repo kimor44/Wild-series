@@ -19,6 +19,18 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
         'Robert Robichet',
     ];
 
+    public function load(ObjectManager $manager)
+    {
+        foreach (self::ACTORS as $key => $actorName) {
+            $actor = new Actor();
+            $actor->setName($actorName);
+            $name = 'program_'.rand(0,9);
+            $actor->addProgram($this->getReference($name));
+            $manager->persist($actor);
+        }
+        $manager->flush();
+    }
+
     public function getDependencies()
 
     {
@@ -27,14 +39,4 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
 
     }
 
-    public function load(ObjectManager $manager)
-    {
-        foreach (self::ACTORS as $key => $actorName) {
-            $actor = new Actor();
-            $actor->setName($actorName);
-            $manager->persist($actor);
-            $this->addReference('actor_'.$key, $actor);
-        }
-        $manager->flush();
-    }
 }
