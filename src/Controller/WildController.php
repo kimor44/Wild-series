@@ -8,6 +8,7 @@ use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
 use App\Form\ProgramSearchType;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +59,7 @@ class WildController extends AbstractController
      * @param string $slug The slugger
      * @return Response
      */
-    public function show(string $slug): Response
+    public function show(string $slug, Slugify $slugify): Response
     {
         if (!$slug) {
             throw $this->createNotFoundException('No slug has been sent to find a program in program\'s table.');
