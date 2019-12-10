@@ -33,8 +33,7 @@ class WildController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()){
             $data = $form->getData();
-            $programsResult = $this->getDoctrine()->getRepository(Program::class)->findBy(
-                ['title' => $data]);
+            $programsResult = $this->getDoctrine()->getRepository(Program::class)->findBySearch($data);
             return $this->render('wild/index.html.twig', [
                 'website' => 'Wild Séries',
                 'programs' => $programsResult,
@@ -59,16 +58,13 @@ class WildController extends AbstractController
      * @param string $slug The slugger
      * @return Response
      */
-    public function show(string $slug, Slugify $slugify): Response
+    public function show(string $slug): Response
     {
         if (!$slug) {
             throw $this->createNotFoundException('No slug has been sent to find a program in program\'s table.');
         }
-        $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
-        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => mb_strtolower($slug)]);
+
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['slug' => $slug]);
         if (!$program) {
             throw $this->createNotFoundException('No program with ' . $slug . ' title, found in program\'s table.');
         }
