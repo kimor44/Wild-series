@@ -14,9 +14,9 @@
                 <p>{{ program.summary }}</p>
                 {# , {slug: program.title} #}
                 <p>
-                    <a href="{{ path('wild_show', {slug: program.title|lower|replace({' ': '-'})}) }}"
+                    <a href="{{ path('wild_show', {slug: program.slug}) }}"
                        class="btn btn-primary">Voir la fiche</a>
-                    <a href="{{ path('wild_show_program', {programName: program.title|lower|replace({' ': '-'})}) }}"
+                    <a href="{{ path('wild_show_program', {programName: program.slug}) }}"
                        class="btn btn-secondary">Voir les saisons</a>
                 </p>
             </div>

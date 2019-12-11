@@ -30,7 +30,7 @@
         <strong>Acteur :</strong>
         <ul class="list-group">
             {% for actor in program.actors %}
-                <li class="list-group-item">{{ actor.name }} <a href="{{ path('wild_show_actor', {id: actor.id}) }}"
+                <li class="list-group-item">{{ actor.name }} <a href="{{ path('wild_show_actor', {'slug': actor.slug}) }}"
                                                                 class="btn btn-primary stretched-link">fiche acteur</a>
                 </li>
             {% else %}
@@ -39,6 +39,6 @@
         </ul>
         <a href="{{ path('program_index') }}">back to list</a>
         <br>
-        <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+        <a href="{{ path('program_edit', {'slug': program.slug}) }}">edit</a>
     </div>
 {% endblock %}

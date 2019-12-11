@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Program{% endblock %}
+{% block title %}Edit {{ program.title }}{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Edit Program</h1>
+        <h1>Edit <em>{{ program.title }}</em></h1>
 
         {{ include('program/_form.html.twig', {'button_label': 'Update'}) }}
 

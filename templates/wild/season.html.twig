@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h4>{{ episode.title }}</h4>
                     <p>{{ episode.synopsis }}</p>
-                    <p><a href="{{ path('wild_show_episode', {'id' : episode.id}) }}" class="btn btn-primary"> Voir
+                    <p><a href="{{ path('wild_show_episode', {'slug' : episode.slug}) }}" class="btn btn-primary"> Voir
                             l'épisode</a></p>
                 </div>
             </div>
