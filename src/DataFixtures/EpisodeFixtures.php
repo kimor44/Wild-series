@@ -11,10 +11,11 @@ use Faker;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
+    const NUMBER_EPISODES = 250;
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 250; $i++) {
+        for ($i = 0; $i < self::NUMBER_EPISODES; $i++) {
             $episode = new Episode();
             $slug = new Slugify();
             $title = $faker->text(25);
@@ -23,7 +24,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
             $episode->setSynopsis($faker->paragraph);
             $episode->setNumber($faker->numberBetween(1,5));
             $episode->setSlug($slug);
-            $episode->setSeason($this->getReference('season_'.rand(0,49)));
+            $episode->setSeason($this->getReference('season_'.rand(0,SeasonFixtures::NUMBER_SEASONS-1)));
             $manager->persist($episode);
         }
         $manager->flush();

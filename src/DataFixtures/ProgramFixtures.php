@@ -95,6 +95,8 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     ];
 
+    const NUMBER_PROGRAMS = 10;
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -107,7 +109,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setSummary($data['summary']);
             $program->setPoster($faker->imageUrl(600, 1000));
             $program->setSlug($slug);
-            $program->setCategory($this->getReference('category_'.rand(0,7)));
+            $program->setCategory($this->getReference('category_'.rand(0,CategoryFixtures::NUMBER_CATEGORIES-1)));
             $manager->persist($program);
             $this->addReference('program_'.$i, $program);
             $i++;
