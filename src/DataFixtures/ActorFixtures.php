@@ -21,6 +21,8 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
         'Robert Robichet',
     ];
 
+    const NUMBER_PROGRAMS_PER_ACTOR = 3;
+
     public function load(ObjectManager $manager)
     {
         foreach (self::ACTORS as $key => $actorName) {
@@ -29,19 +31,20 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
             $slug = $slug->generate($actorName);
             $actor->setName($actorName);
             $actor->setSlug($slug);
-            $name = 'program_' . rand(0, 9);
+            $name = 'program_' . rand(0, ProgramFixtures::NUMBER_PROGRAMS-1);
             $actor->addProgram($this->getReference($name));
             $manager->persist($actor);
         }
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < SeasonFixtures::NUMBER_SEASONS-1; $i++) {
             $actor = new Actor();
             $slug = new Slugify();
+            $actorName = $faker->name;
             $slug = $slug->generate($actorName);
-            $actor->setName($faker->name);
+            $actor->setName($actorName);
             $actor->setSlug($slug);
-            for ($ii = 0; $ii < 3; $ii++) {
-                $name = 'program_' . rand(0, 9);
+            for ($ii = 0; $ii < self::NUMBER_PROGRAMS_PER_ACTOR; $ii++) {
+                $name = 'program_' . rand(0, ProgramFixtures::NUMBER_PROGRAMS-1);
                 $actor->addProgram($this->getReference($name));
                 $manager->persist($actor);
             }

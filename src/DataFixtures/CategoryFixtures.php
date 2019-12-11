@@ -18,6 +18,8 @@ class CategoryFixtures extends Fixture
         'Animation',
         'Soap',
     ];
+
+    const NUMBER_CATEGORIES = 8;
     public function load(ObjectManager $manager)
     {
         foreach (self::CATEGORIES as $key => $categoryName) {
