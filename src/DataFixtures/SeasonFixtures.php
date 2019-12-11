@@ -10,14 +10,15 @@ use Faker;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
+    const NUMBER_SEASONS = 50;
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < self::NUMBER_SEASONS; $i++) {
             $season = new Season();
             $season->setYear($faker->year);
             $season->setDescription($faker->paragraph);
-            $season->setProgram($this->getReference('program_'.rand(0,7)));
+            $season->setProgram($this->getReference('program_'.rand(0,ProgramFixtures::NUMBER_PROGRAMS-1)));
             $manager->persist($season);
             $this->addReference('season_'.$i, $season);
         }
