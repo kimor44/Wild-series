@@ -8,6 +8,7 @@ use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
 use App\Form\ProgramSearchType;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,8 +33,7 @@ class WildController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()){
             $data = $form->getData();
-            $programsResult = $this->getDoctrine()->getRepository(Program::class)->findBy(
-                ['title' => $data]);
+            $programsResult = $this->getDoctrine()->getRepository(Program::class)->findBySearch($data);
             return $this->render('wild/index.html.twig', [
                 'website' => 'Wild Séries',
                 'programs' => $programsResult,
@@ -54,7 +54,7 @@ class WildController extends AbstractController
 
     /**
      * Getting a program with a formatted slug for title
-     * @Route("/show/{slug}", requirements={"slug"="^[0-9a-z-]+$"}, methods={"GET"}, defaults={"slug": null}, name="show")
+     * @Route("/show/{slug}", methods={"GET"}, defaults={"slug": null}, name="show")
      * @param string $slug The slugger
      * @return Response
      */
@@ -63,11 +63,8 @@ class WildController extends AbstractController
         if (!$slug) {
             throw $this->createNotFoundException('No slug has been sent to find a program in program\'s table.');
         }
-        $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
-        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['title' => mb_strtolower($slug)]);
+
+        $program = $this->getDoctrine()->getRepository(Program::class)->findOneBy(['slug' => $slug]);
         if (!$program) {
             throw $this->createNotFoundException('No program with ' . $slug . ' title, found in program\'s table.');
         }
@@ -156,7 +153,7 @@ class WildController extends AbstractController
 
     /**
      * Getting Episode with an Id
-     * @Route("/episode/{id}", requirements={"id"="^[0-9]+$"}, name="show_episode")
+     * @Route("/episode/{slug}", requirements={"id"="^[0-9]+$"}, name="show_episode")
      * @param Episode $episode
      * @return Response A episode
      */
@@ -173,8 +170,8 @@ class WildController extends AbstractController
 
     /**
      * Getting Actor with an Id
-     * @Route("/actor/{id}", requirements={"id"="^[0-9]+$"}, name="show_actor")
-     * @param int $id
+     * @Route("/actor/{slug}", name="show_actor")
+     * @param Actor $actor
      * @return Response An actor
      */
     public function showActor(Actor $actor): Response
