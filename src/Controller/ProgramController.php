@@ -6,6 +6,7 @@ use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -49,12 +50,13 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
-            $email = (new Email())
-                ->from('guibtrash@gmail.com')
-                ->to('guibtrash@gmail.com')
+            $email = (new TemplatedEmail())
+                ->from('no-reply@wildseries.com')
+                ->to($this->getParameter('mailer_from'))
                 ->subject('Une nouvelle série vient d\'être publiée !')
-                ->html('<p>La série <a href="http://127.0.0.1:8000/program/'. $program->getSlug() .'">'. $program->getTitle() .'</a> vient d\'être publiée sur Wild Séries !</p>');
-
+                ->htmlTemplate('program/email/notification.html.twig')
+                ->context(['program' => $program]);
+                //->html('<p>La série <a href="http://127.0.0.1:8000/program/'. $program->getSlug() .'">'. $program->getTitle() .'</a> vient d\'être publiée sur Wild Séries !</p>');
             $mailer->send($email);
             return $this->redirectToRoute('program_index');
         }
