@@ -6,9 +6,13 @@ use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,8 +32,13 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param Slugify $slugify
+     * @param MailerInterface $mailer
+     * @return Response
+     * @throws TransportExceptionInterface
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -41,7 +50,14 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
-
+            $email = (new TemplatedEmail())
+                ->from('no-reply@wildseries.com')
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->htmlTemplate('program/email/notification.html.twig')
+                ->context(['program' => $program]);
+                //->html('<p>La série <a href="http://127.0.0.1:8000/program/'. $program->getSlug() .'">'. $program->getTitle() .'</a> vient d\'être publiée sur Wild Séries !</p>');
+            $mailer->send($email);
             return $this->redirectToRoute('program_index');
         }
 

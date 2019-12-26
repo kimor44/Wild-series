@@ -45,3 +45,6 @@ https://www.loom.com/share/bce4fe9a8573446e99d01c16bcf918cb
 
 ####Quest "Introduction aux Services"
 https://www.loom.com/share/d08e25b12a9a4d4e99243c0028052de0
+
+####Quest "Envoi d'e-mail"
+https://www.loom.com/share/ab894507513f4bc194b8755ec2562479
