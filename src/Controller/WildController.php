@@ -166,7 +166,7 @@ class WildController extends AbstractController
         $comment = new Comment();
         $comments = $commentRepository->findBy(
             ['episode' => $episode->getId()],
-            ['id' => 'DESC']
+            ['id' => 'ASC']
         );
         $form = $this->createForm(
             CommentType::class,
