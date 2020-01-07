@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
-use App\Service\Slugify;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +33,7 @@ class WildController extends AbstractController
             ['method' => Request::METHOD_GET]
         );
         $form->handleRequest($request);
-        if ($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             $data = $form->getData();
             $programsResult = $this->getDoctrine()->getRepository(Program::class)->findBySearch($data);
             return $this->render('wild/index.html.twig', [
@@ -153,18 +155,51 @@ class WildController extends AbstractController
 
     /**
      * Getting Episode with an Id
-     * @Route("/episode/{slug}", requirements={"id"="^[0-9]+$"}, name="show_episode")
+     * @Route("/episode/{slug}", name="show_episode")
      * @param Episode $episode
+     * @param Request $request
+     * @param CommentRepository $commentRepository
      * @return Response A episode
      */
-    public function showEpisode(Episode $episode): Response
+    public function showEpisode(Episode $episode, Request $request, CommentRepository $commentRepository): Response
     {
+        $comment = new Comment();
+        $comments = $commentRepository->findBy(
+            ['episode' => $episode->getId()],
+            ['id' => 'ASC']
+        );
+        $form = $this->createForm(
+            CommentType::class,
+            null,
+            ['method' => Request::METHOD_POST]
+        );
+        $form->handleRequest($request);
         $season = $episode->getSeason();
         $program = $season->getProgram();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentPost = $form->getData();
+            $user = $this->getUser();
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setAuthor($user);
+            $comment->setEpisode($episode);
+            $comment->setComment($commentPost->getComment());
+            $comment->setRate($commentPost->getRate());
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Merci pour votre commentaire !'
+            );
+            return $this->redirectToRoute('wild_show_episode', [
+                'slug' => $episode->getSlug(),
+            ]);
+        }
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            'comments' => $comments,
+            'commentForm' => $form->createView(),
         ]);
     }
 
