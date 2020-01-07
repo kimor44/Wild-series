@@ -16,4 +16,9 @@
         </a>
 
     </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="container">
+            <h2>Coucou super admin</h2>
+        </div>
+    {% endif %}
 {% endblock %}

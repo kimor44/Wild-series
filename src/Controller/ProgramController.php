@@ -56,7 +56,6 @@ class ProgramController extends AbstractController
                 ->subject('Une nouvelle série vient d\'être publiée !')
                 ->htmlTemplate('program/email/notification.html.twig')
                 ->context(['program' => $program]);
-                //->html('<p>La série <a href="http://127.0.0.1:8000/program/'. $program->getSlug() .'">'. $program->getTitle() .'</a> vient d\'être publiée sur Wild Séries !</p>');
             $mailer->send($email);
             return $this->redirectToRoute('program_index');
         }
