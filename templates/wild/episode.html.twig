@@ -10,5 +10,13 @@
         <hr>
         <h2>{{ episode.title }} <small class="text-muted">Episode {{ episode.number }}</small></h2>
         <p>{{ episode.synopsis }}</p>
+        {% if is_granted('ROLE_SUBSCRIBER') %}
+            <div class="container">
+                <h2>Laisser un commentaire :</h2>
+                {{ form_start(commentForm) }}
+                {{ form_end(commentForm) }}
+
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

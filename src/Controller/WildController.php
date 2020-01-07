@@ -7,6 +7,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Category;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -156,14 +157,21 @@ class WildController extends AbstractController
      * @param Episode $episode
      * @return Response A episode
      */
-    public function showEpisode(Episode $episode): Response
+    public function showEpisode(Episode $episode, Request $request): Response
     {
+        $form = $this->createForm(
+            CommentType::class,
+            null,
+            ['method' => Request::METHOD_POST]
+        );
+        $form->handleRequest($request);
         $season = $episode->getSeason();
         $program = $season->getProgram();
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            'commentForm' => $form->createView(),
         ]);
     }
 
