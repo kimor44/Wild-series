@@ -164,9 +164,10 @@ class WildController extends AbstractController
     public function showEpisode(Episode $episode, Request $request, CommentRepository $commentRepository): Response
     {
         $comment = new Comment();
-        $comments = $commentRepository->findBy([
-            'episode' => $episode->getId(),
-        ]);
+        $comments = $commentRepository->findBy(
+            ['episode' => $episode->getId()],
+            ['id' => 'DESC']
+        );
         $form = $this->createForm(
             CommentType::class,
             null,
